@@ -3,15 +3,37 @@
 ## Platform
 
 * Raspberry PI2 
-* Hifiberry DAC
+* Hifiberry Amp+
 * Archlinux
 * Docker
 
-Install archlinux for RPI2 onto microSD (http://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2)
+###Install archlinux for RPI2
+http://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2
 Boot and login as root
-install docker
-set Hifiberry DAC overlay (https://www.hifiberry.com/guides/configuring-linux-3-18-x)
-  
+
+###Install docker and tools
+
+```bash
+pacman-db-upgrade 
+pacman -Syyu --noconfirm 
+pacman -S --noconfirm --needed git docker htop lsb-release
+systemctl enable docker
+```
+
+### set Hifiberry DAC overlay (https://www.hifiberry.com/guides/configuring-linux-3-18-x)
+
+```bash
+sed -i 's/#device_tree_overlay=hifiberry-amp/device_tree_overlay=hifiberry-amp/' config.txt
+reboot
+```
+
+### Clone Cheam Repo, build and run containers
+
+git clone
+
+
+# Build script does this
+
 ## Create base archlinux image 
 
 https://registry.hub.docker.com/u/armv7/armhf-archlinux
