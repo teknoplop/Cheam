@@ -1,0 +1,42 @@
+# Set base image
+FROM armv7/armhf-archlinux-cheambase:latest
+
+RUN pacman -S --noconfirm --needed git base-devel cmake alsa-lib libdaemon openssl avahi popt unzip faad2 flac libmad libvorbis mpg123 portaudio
+
+RUN useradd build
+RUN mkdir /home/build
+RUN chown build:build /home/build
+
+ADD https://aur.archlinux.org/packages/li/libsoxr/libsoxr.tar.gz /home/build/
+ADD https://github.com/EliaCereda/shairport-sync-PKGBUILD/archive/master.zip  /home/build/
+ADD https://aur.archlinux.org/packages/sq/squeezelite-git/squeezelite-git.tar.gz /home/build/
+
+RUN chown -R build:build /home/build
+
+USER build
+RUN tar -zxf /home/build/squeezelite-git.tar.gz -C /home/build
+RUN tar -zxf /home/build/libsoxr.tar.gz -C /home/build
+
+WORKDIR /home/build/squeezelite-git
+RUN sed -i 's/armv6h/armv7h/' PKGBUILD
+RUN makepkg
+
+
+WORKDIR /home/build/libsoxr
+RUN makepkg
+
+
+
+USER root
+RUN pacman -U --needed --noconfirm /home/build/libsoxr/libsoxr-0.1.1-2-armv7h.pkg.tar.xz
+
+USER build
+WORKDIR /home/build/
+RUN unzip master.zip
+
+WORKDIR /home/build/shairport-sync-PKGBUILD-master
+RUN makepkg
+
+
+USER root
+CMD cp -t /artifacts /home/build/libsoxr/libsoxr-0.1.1-2-armv7h.pkg.tar.xz /home/build/shairport-sync-PKGBUILD-master/shairport-sync-git-2.2.1.r0.g4fb4ec4-1-armv7h.pkg.tar.xz /home/build/squeezelite-git/squeezelite-git-1.8.r0.g8b8dfe6-1-armv7h.pkg.tar.xz
