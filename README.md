@@ -23,7 +23,7 @@ systemctl enable docker
 
 https://www.hifiberry.com/guides/configuring-linux-3-18-x
 
-Enable AMP+ DAC overlay and remove onboard sound
+Enable AMP+ overlay and remove onboard sound
 
 ```bash
 sed -i 's/#device_tree_overlay=hifiberry-amp/device_tree_overlay=hifiberry-amp/' config.txt
