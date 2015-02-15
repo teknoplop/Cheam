@@ -14,7 +14,7 @@ Setup plaform:
   install docker
   set Hifiberry DAC overlay (https://www.hifiberry.com/guides/configuring-linux-3-18-x)
   
-Create base archlinux image
+Create base archlinux image (https://registry.hub.docker.com/u/armv7/armhf-archlinux/)
 
 curl -L http://archlinuxarm.org/os/ArchLinuxARM-utilite-latest.tar.gz | gunzip | docker import - armv7/armhf-archlinux-cheambase:latest
 
