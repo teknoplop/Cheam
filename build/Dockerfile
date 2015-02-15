@@ -4,10 +4,7 @@ FROM armv7/armhf-archlinux:latest
 # Update pacman and install packages
 RUN pacman-db-upgrade
 RUN pacman -Syyu --noconfirm
-
-RUN pacman -S --noconfirm git 
-RUN pacman -S --noconfirm base-devel
-RUN pacman -S --noconfirm cmake
+RUN pacman -S --noconfirm --needed git base-devel cmake alsa-lib libdaemon openssl avahi popt unzip
 
 RUN useradd build
 RUN mkdir /home/build
@@ -16,17 +13,14 @@ RUN curl -L -o /home/build/libsoxr.tgz https://aur.archlinux.org/packages/li/lib
 xr.tar.gz
 RUN curl -L -o /home/build/shairport-sync.zip https://github.com/EliaCereda/shairport-sync
 -PKGBUILD/archive/master.zip
-RUN pacman -S --noconfirm unzip
-RUN pacman -S --noconfirm alsa-lib libdaemon openssl avahi popt
-USER build
 
+USER build
 RUN tar -zxf /home/build/libsoxr.tgz -C /home/build
 
 WORKDIR /home/build/libsoxr
 RUN makepkg
 
 USER root
-
 RUN pacman -U --needed --noconfirm /home/build/libsoxr/libsoxr-0.1.1-2-armv7h.pkg.tar.xz
 
 USER build
