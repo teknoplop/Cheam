@@ -15,8 +15,7 @@ Boot and login as root
 
 ```bash
 pacman-db-upgrade 
-pacman -Syyu --noconfirm 
-pacman -S --noconfirm --needed git docker htop lsb-release
+pacman -Syyu --noconfirm  git docker htop lsb-release tree
 systemctl enable docker
 ```
 
@@ -29,7 +28,31 @@ reboot
 
 ### Clone Cheam Repo, build and run containers
 
-git clone
+```bash
+git clone https://github.com/teknoplop/Cheam.git
+./Cheam/build.sh
+
+cd base
+curl -OL http://archlinuxarm.org/os/ArchLinuxARM-utilite-latest.tar.gz
+docker build armv7/armhf-archlinux-cheambase base
+
+cd ../build
+docker build --file=Dockerfile.build --tag=armv7/armhf-archlinux-cheambuild .
+docker run -ti -v ${PWD}/artifacts:/artifacts armv7/armhf-arch-cheambuild
+docker build --file=Dockerfile.shairport -t armv7/armhf-arch-cheamshairport .
+docker build --file=Dockerfile.squeezelite -t armv7/armhf-arch-cheamsqueezelight .
+
+```
+
+## Run Shairport/Squeezebox containers
+
+```bash
+docker run --privileged=true --net=host -d --restart='always' -e SPNAME=RPI2ARCH armv7/armhf-arch-cheamshairport
+docker run --privileged=true --net=host -d --restart='always' -e SLNAME=RPI2ARCH armv7/armhf-arch-cheamsqueezelight
+```
+
+## clean up intermediate images/containers
+
 
 
 # Build script does this
@@ -39,6 +62,8 @@ git clone
 https://registry.hub.docker.com/u/armv7/armhf-archlinux
 
 ```bash
+
+
 curl -L http://archlinuxarm.org/os/ArchLinuxARM-utilite-latest.tar.gz | gunzip | docker import - armv7/armhf-archlinux-cheambase:latest
 ```
 
@@ -63,12 +88,6 @@ copy libsoxr and shairport sync pkg
 docker build -t armv7/armhf-arch-cheamsqueezelight .
 ```
 
-## Run Shairport/Squeezebox containers
-
-```bash
-docker run --privileged=true --net=host -d --restart='always' -e SPNAME=RPI2ARCH armv7/armhf-arch-cheamshairport
-docker run --privileged=true --net=host -d --restart='always' -e SLNAME=RPI2ARCH armv7/armhf-arch-cheamsqueezelight
-```
 
 
 
