@@ -19,10 +19,14 @@ pacman -Syyu --noconfirm  git docker htop lsb-release tree
 systemctl enable docker
 ```
 
-### set Hifiberry DAC overlay (https://www.hifiberry.com/guides/configuring-linux-3-18-x)
+### Setup HiFiBerry 
+
+https://www.hifiberry.com/guides/configuring-linux-3-18-x
+Enable AMP+ DAC overlay and remove onboard sound
 
 ```bash
 sed -i 's/#device_tree_overlay=hifiberry-amp/device_tree_overlay=hifiberry-amp/' config.txt
+sed -i 's/snd-bcm2835//' /etc/modules-load.d/raspberrypi.conf
 reboot
 ```
 
