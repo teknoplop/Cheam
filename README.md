@@ -15,8 +15,7 @@ Boot and login as root
 
 ```bash
 pacman-db-upgrade 
-pacman -Syyu --noconfirm 
-pacman -S --noconfirm --needed git docker htop lsb-release tree
+pacman -Syyu --noconfirm  git docker htop lsb-release tree
 systemctl enable docker
 ```
 
