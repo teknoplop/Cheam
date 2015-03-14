@@ -26,7 +26,7 @@ https://www.hifiberry.com/guides/configuring-linux-3-18-x
 Enable AMP+ overlay and remove onboard sound
 
 ```bash
-sed -i 's/#device_tree_overlay=hifiberry-amp/device_tree_overlay=hifiberry-amp/' config.txt
+sed -i 's/#device_tree_overlay=hifiberry-amp/device_tree_overlay=hifiberry-amp/' /boot/config.txt
 sed -i 's/snd-bcm2835//' /etc/modules-load.d/raspberrypi.conf
 reboot
 ```
