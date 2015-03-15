@@ -1,0 +1,18 @@
+FROM scratch
+
+# make this from debootstrap, then tar it up
+# https://wiki.linaro.org/RikuVoipio/Docker-multiarch
+ADD debian-jessie-armhf.tgz /
+RUN apt-get update -y
+
+RUN apt-get install git  --no-install-recommends -y
+RUN apt-get install wget build-essential make libasound2-dev libflac-dev libmad0-dev libfaad-dev libvorbis-dev libmpg123-dev liblircclient-dev  --no-install-recommends -y
+RUN apt-get install ca-certificates  --no-install-recommends -y
+
+RUN cd /root
+RUN git clone https://code.google.com/p/squeezelite/ /root/squeezelite
+
+RUN OPTS=-DIR make -C /root/squeezelite
+
+CMD /bin/bash
+
