@@ -15,7 +15,8 @@ Boot and login as root
 
 ```bash
 pacman-db-upgrade 
-pacman -Syyu --noconfirm  git docker htop lsb-release tree
+pacman -Syyu --noconfirm  git docker htop lsb-release tree vim
+echo "alias vi=/usr/bin/vim" > ~/.bashrc
 systemctl enable docker
 ```
 
