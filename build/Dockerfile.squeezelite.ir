@@ -1,0 +1,11 @@
+FROM armv7/armhf-archlinux-cheambase:latest
+
+RUN pacman -S --noconfirm --needed alsa-utils lirc supervisor 
+
+# built by a debian container
+COPY artifacts/squeezelite /root/squeezelite
+
+ADD http://lirc.sourceforge.net/remotes/slim_devices/Squeezebox3 /root/Squeezebox3
+COPY squeezelite.ir.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf" ] 
