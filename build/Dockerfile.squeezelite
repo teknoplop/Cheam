@@ -6,4 +6,4 @@ COPY artifacts/squeezelite-git-1.8.r0.g8b8dfe6-1-armv7h.pkg.tar.xz /root/squeeze
 
 RUN pacman -U --noconfirm /root/squeezelite-git-1.8.r0.g8b8dfe6-1-armv7h.pkg.tar.xz
 
-CMD /usr/sbin/squeezelite -n $SLNAME
+CMD /usr/sbin/squeezelite -V Master -d all=info -f /squeezebox/squeezelite.log -N /squeezebox/name
