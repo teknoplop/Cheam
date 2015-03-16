@@ -17,7 +17,10 @@ Boot and login as root
 pacman-db-upgrade 
 pacman -Syyu --noconfirm  git docker htop lsb-release tree vim
 echo "alias vi=/usr/bin/vim" > ~/.bashrc
+echo '[[ -r ~/.bashrc ]] && . ~/.bashrc' > ~/.bash_profile
 systemctl enable docker
+mkdir /home/squeezebox
+echo `hostname` > /home/squeezebox/name
 ```
 
 ### Setup HiFiBerry 
